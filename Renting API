@@ -1,0 +1,64 @@
+class Movie {
+  constructor(title, genre) {
+    this.title = title;
+    this.genre = genre;
+    this.available = true;
+  }
+
+  rentMovie() {
+    if (this.available) {
+      this.available = false;
+      console.log(`You have successfully rented "${this.title}". Enjoy the movie!`);
+    } else {
+      console.log(`Sorry, "${this.title}" is currently not available for rent.`);
+    }
+  }
+}
+
+class MovieStore {
+  constructor() {
+    this.movies = [];
+  }
+
+  addMovie(title, genre) {
+    const newMovie = new Movie(title, genre);
+    this.movies.push(newMovie);
+    console.log(`"${title}" has been added to the movie store.`);
+  }
+
+  displayAvailableMovies() {
+    const availableMovies = this.movies.filter(movie => movie.available);
+    
+    if (availableMovies.length === 0) {
+      console.log("No movies available at the moment.");
+    } else {
+      console.log("Available Movies:");
+      availableMovies.forEach(movie => console.log(`- ${movie.title} (${movie.genre})`));
+    }
+  }
+
+  rentMovie(title) {
+    const movieToRent = this.movies.find(movie => movie.title === title);
+
+    if (movieToRent) {
+      movieToRent.rentMovie();
+    } else {
+      console.log(`Movie "${title}" not found in the store.`);
+    }
+  }
+}
+
+// Example Usage
+const movieStore = new MovieStore();
+
+movieStore.addMovie("The Shawshank Redemption", "Drama");
+movieStore.addMovie("Inception", "Sci-Fi");
+movieStore.addMovie("The Dark Knight", "Action");
+
+movieStore.displayAvailableMovies();
+
+movieStore.rentMovie("Inception");
+movieStore.rentMovie("The Dark Knight");
+movieStore.rentMovie("The Dark Knight");
+
+movieStore.displayAvailableMovies();
